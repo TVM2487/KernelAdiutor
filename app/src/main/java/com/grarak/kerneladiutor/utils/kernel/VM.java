@@ -34,6 +34,7 @@ public class VM implements Constants {
     private static List<String> vmFiles = new ArrayList<>();
 
     public static void setZRAMDisksize(final int value, final Context context) {
+<<<<<<< HEAD
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -49,6 +50,18 @@ public class VM implements Constants {
                 }
             }
         }).start();
+=======
+        int size = value * 1024 * 1024;
+        Control.runCommand("swapoff " + ZRAM_BLOCK + " > /dev/null 2>&1", ZRAM_BLOCK, Control.CommandType.CUSTOM, "swapoff", context);
+        Control.runCommand("1", ZRAM_RESET, Control.CommandType.GENERIC, context);
+        if (size != 0) {
+            Control.runCommand(String.valueOf(size), ZRAM_DISKSIZE, Control.CommandType.GENERIC, context);
+            Control.runCommand("mkswap " + ZRAM_BLOCK + " > /dev/null 2>&1", ZRAM_BLOCK,
+                    Control.CommandType.CUSTOM, "mkswap", context);
+            Control.runCommand("swapon " + ZRAM_BLOCK + " > /dev/null 2>&1", ZRAM_BLOCK,
+                    Control.CommandType.CUSTOM, "swapon", context);
+        }
+>>>>>>> Grarak/master
     }
 
     public static int getZRAMDisksize() {

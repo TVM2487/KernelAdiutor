@@ -375,12 +375,21 @@ public class CPU implements Constants {
         if (getMaxFreq(command == Control.CommandType.CPU ? getBigCore() : getLITTLEcore(), true) < freq)
             setMaxFreq(command, freq, context);
         Control.runCommand(String.valueOf(freq), CPU_MIN_FREQ, command, context);
+<<<<<<< HEAD
     }
 
     public static int getMinFreq(boolean forceRead) {
         return getMinFreq(getBigCore(), forceRead);
     }
 
+=======
+    }
+
+    public static int getMinFreq(boolean forceRead) {
+        return getMinFreq(getBigCore(), forceRead);
+    }
+
+>>>>>>> Grarak/master
     public static int getMinFreq(int core, boolean forceRead) {
         if (forceRead && core > 0) while (!Utils.existFile(String.format(CPU_MIN_FREQ, core)))
             activateCore(core, true, null);
@@ -403,10 +412,16 @@ public class CPU implements Constants {
             Control.runCommand("1", CPU_ENABLE_OC, Control.CommandType.CPU, context);
         if (getMinFreq(command == Control.CommandType.CPU ? getBigCore() : getLITTLEcore(), true) > freq)
             setMinFreq(command, freq, context);
+<<<<<<< HEAD
         Control.runCommand(String.valueOf(freq), CPU_MAX_FREQ_KT, command, context);
         if (getMinFreq(command == Control.CommandType.CPU ? getBigCore() : getLITTLEcore(), true) > freq)
             setMinFreq(command, freq, context);
         Control.runCommand(String.valueOf(freq), CPU_MAX_FREQ, command, context);
+=======
+        if (Utils.existFile(String.format(CPU_MAX_FREQ_KT, 0)))
+            Control.runCommand(String.valueOf(freq), CPU_MAX_FREQ_KT, command, context);
+        else Control.runCommand(String.valueOf(freq), CPU_MAX_FREQ, command, context);
+>>>>>>> Grarak/master
     }
 
     public static int getMaxFreq(boolean forceRead) {
@@ -437,6 +452,10 @@ public class CPU implements Constants {
             if (value != null) return Utils.stringToInt(value);
         }
         return 0;
+    }
+
+    public static void onlineAllCores(Context context) {
+        for (int i = 1; i < getCoreCount(); i++) activateCore(i, true, context);
     }
 
     public static void activateCore(int core, boolean active, Context context) {

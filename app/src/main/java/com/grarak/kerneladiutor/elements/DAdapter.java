@@ -369,6 +369,11 @@ public class DAdapter {
         }
 
         private static Bitmap uriToBitmap(Uri uri, Context context) throws IOException {
+<<<<<<< HEAD
+=======
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                context.getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+>>>>>>> Grarak/master
             InputStream inputStream = context.getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             inputStream.close();
